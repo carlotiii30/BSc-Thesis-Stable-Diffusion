@@ -1,60 +1,55 @@
-# TFG
-Trabajo de Fin de Grado de Ingeniería Informática
+# Custom Stable Diffusion via DreamBooth (FastAPI Backend)
 
-## Quickstart: Instalación y uso
+[![Python](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=flat-square&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Poetry](https://img.shields.io/badge/Poetry-Dependency%20Manager-60A5FA?style=flat-square&logo=poetry&logoColor=white)](https://python-poetry.org/)
 
-### 1. Instalación de dependencias
+This repository contains the core AI implementation and backend architecture of my Bachelor's Thesis in Computer Engineering. It focuses on custom text-to-image generation through modern generative deep learning techniques.
 
-Este proyecto utiliza [Poetry](https://python-poetry.org/) para la gestión de dependencias. Si no tienes Poetry instalado, puedes instalarlo con:
+---
+
+## Model Architecture & Core Implementation
+
+### 🔹 Model Fine-Tuning (DreamBooth)
+The system leverages **Stable Diffusion** as its foundational text-to-image generative framework. To achieve specialized domain adaptation, the base model was fine-tuned using **DreamBooth** to personalize image generation for specific dog breeds. 
+
+*   **Dataset:** A filtered subset of the **Stanford Dogs Dataset** was curated, selecting specific breeds and balancing class distributions.
+*   **Hardware Optimization:** Implemented advanced training configurations to handle large-scale weights adjustment under strict hardware constraints, including **mixed precision (fp16)**, **gradient checkpointing**, and dynamic batch-size reduction for optimal GPU memory management.
+*   **Custom Pipeline:** Built a dedicated Python inference pipeline for serving the custom-tuned weights efficiently.
+
+### 🔹 Backend Architecture (FastAPI)
+The fine-tuned models and inference pipelines are fully exposed through a high-performance **FastAPI** application, enabling synchronous and asynchronous HTTP requests for model management and image generation tasks.
+
+---
+
+## Quickstart: Installation & Usage
+
+### 1. Dependency Management
+This project uses **Poetry** for package isolation and deterministic environment replication.
+
+Install Poetry if you don't have it yet:
 ```bash
 pip install poetry
 ```
 
-Luego, instala las dependencias del proyecto:
+Install project dependencies:
 ```bash
 poetry install
 ```
 
-### 2. Ejecución del servidor FastAPI
-Para iniciar la API ejecuta:
+### 2. Running the FastAPI Server
+To spin up the development server with hot-reloading:
 ```bash
 poetry run uvicorn api.main:app --reload
 ```
 
-El servidor estará disponible en http://localhost:8000.
+### 3. API Consumption & Interactive Docs
+You can explore and test the available endpoints via the Swagger interactive UI at: `http://localhost:8000/docs`
 
-### 3. Uso de la API
-Puedes acceder a la documentación interactiva de la API en http://localhost:8000/docs.
+---
 
-### Ejemplo de petición para generar una imagen
-Puedes usar curl o herramientas como Postman para hacer peticiones a la API. Por ejemplo, para generar una imagen:
-```bash
-curl -X POST "http://localhost:8000/images/generate" -H "Content-Type: application/json" -d '{"prompt": "A golden retriever running on the beach"}'
-```
-
-Consulta la documentación en /docs para ver todos los endpoints disponibles y sus parámetros.
-
-## Documentación
-
-### Modelo preentrenado utilizado
-
-El modelo preentrenado elegido es **Stable Diffusion**, un modelo generativo de imágenes basado en difusión, ampliamente utilizado para tareas de generación de imágenes a partir de texto.
-
-
-### Modificación realizada al modelo: 
-
-Se ha adaptado y entrenado el modelo Stable Diffusion utilizando la técnica de DreamBooth para personalizar la generación de imágenes de perros de razas específicas. Para ello, se ha seleccionado un subconjunto del dataset Stanford Dogs, filtrando varias razas y limitando el número de imágenes por clase. El modelo base se ha ajustado para aceptar estos datos, empleando técnicas como el uso de precisión mixta (float16), checkpointing de gradientes y reducción del tamaño de batch para optimizar el entrenamiento en GPU. Además, se ha implementado un pipeline de entrenamiento y generación de imágenes personalizado, permitiendo obtener resultados adaptados a las razas seleccionadas.
-
-### Dataset utilizado: Stanford Dogs
-
-El dataset **Stanford Dogs** es un conjunto de datos de imágenes ampliamente utilizado en tareas de visión por computador, especialmente en clasificación y reconocimiento de razas de perros. Contiene más de 20.000 imágenes de alta calidad, distribuidas en 120 razas diferentes de perros, con anotaciones precisas para cada imagen. Este dataset es ideal para entrenar y evaluar modelos de aprendizaje profundo en tareas de clasificación de imágenes y generación de contenido relacionado con perros.
-
-### Disponibilización mediante API
-
-Para facilitar el uso y la integración del modelo, se ha desarrollado una API utilizando **FastAPI**. Esta API permite exponer las funcionalidades principales del modelo, como la generación de imágenes y la gestión de modelos personalizados, de forma sencilla y accesible a través de peticiones HTTP.
-
-
-## Documentos relacionados
-- Interfaz en Java para el uso de la JMR: https://github.com/carlotiii30/TFG-UI
-- Memoria en Latex: https://github.com/carlotiii30/TFG-Memoria
-- Descriptor de la JMR: https://github.com/carlotiii30/TFG-JMR
+## Related Repositories
+This project is part of a modular ecosystem. Check out the other components:
+* **Java Desktop Interface:** [BSc-Thesis-Java-Client](https://github.com/carlotiii30/BSc-Thesis-Java-Client) – The graphical client designed to interact with this API.
+* **Official Thesis Report:** [BSc-Thesis-LaTeX](https://github.com/carlotiii30/BSc-Thesis-LaTeX) – Full LaTeX documentation and academic dissertation.
+* **JMR Descriptor:** [Bsc-JMR](https://github.com/carlotiii30/BSc-JMR) – Specific operational configuration schemas.
