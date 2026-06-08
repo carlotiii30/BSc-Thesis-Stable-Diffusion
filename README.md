@@ -10,14 +10,14 @@ This repository contains the core AI implementation and backend architecture of 
 
 ## Model Architecture & Core Implementation
 
-### 🔹 Model Fine-Tuning (DreamBooth)
+### Model Fine-Tuning (DreamBooth)
 The system leverages **Stable Diffusion** as its foundational text-to-image generative framework. To achieve specialized domain adaptation, the base model was fine-tuned using **DreamBooth** to personalize image generation for specific dog breeds. 
 
 *   **Dataset:** A filtered subset of the **Stanford Dogs Dataset** was curated, selecting specific breeds and balancing class distributions.
 *   **Hardware Optimization:** Implemented advanced training configurations to handle large-scale weights adjustment under strict hardware constraints, including **mixed precision (fp16)**, **gradient checkpointing**, and dynamic batch-size reduction for optimal GPU memory management.
 *   **Custom Pipeline:** Built a dedicated Python inference pipeline for serving the custom-tuned weights efficiently.
 
-### 🔹 Backend Architecture (FastAPI)
+### Backend Architecture (FastAPI)
 The fine-tuned models and inference pipelines are fully exposed through a high-performance **FastAPI** application, enabling synchronous and asynchronous HTTP requests for model management and image generation tasks.
 
 ---
